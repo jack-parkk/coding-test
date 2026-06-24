@@ -3,39 +3,44 @@ package lv2;
 import java.util.*;
 public class 할인_행사 {
     public static void main(String[] args) {
-        String[] want = {"banana", "apple", "rice", "pork", "pot"};
-        int[] number = {3, 2, 2, 2, 1};
-        String[] discount = {"chicken", "apple", "apple", "banana", "rice", "apple", "pork", "banana", "pork", "rice", "pot", "banana", "apple", "banana"};
 
-        int answer = 0;
-        Map<String,Integer> map = new HashMap<>();
-        Map<String,Integer> dump = new HashMap<>();
+        class Solution {
+            public int solution(String[] want, int[] number, String[] discount) {
+                int answer = 0;
 
-        // hashMap에 key value를 넣고
-        for (int i = 0; i < want.length - 1; i++) {
-            map.put(want[i],number[i]);
-        }
-        dump = map;
-        // discount에서 for each로 돌아서
-        // 길이 10안에 전부 다 value를 없앨 수 있을 때 마다 해당 answer를 ++;
-        int leng = 9;
-        for(int i=0; i<discount.length-1; i++) {
-            if (leng == 0) break;
-            if (map.get(discount[i]) != null) {
-                // 할인일일 경우 갯수 -1
-                map.put(discount[i],map.get(discount[i])-1);
-                // 할인품목 전부 구매시 remove
-                if(map.get(discount[i]) == 0 ) {
-                    System.out.println("날아갔니? : " + discount[i]);
-                    map.remove(discount[i]);
+                Map<String, Integer> map = new HashMap<>();
+
+                // 원하는 상품과 개수 저장
+                for (int i = 0; i < want.length; i++) {
+                    map.put(want[i], number[i]);
                 }
-            }
-            // 모두 만족한 10일이면 answer 더하기
-            if(map.isEmpty() || map == null) answer++;
-            leng--;
-        }
 
-        System.out.println("answer = " + answer);
+                // 시작일 i
+                for (int i = 0; i <= discount.length - 10; i++) {
+                    Map<String, Integer> dump = new HashMap<>(map);
+
+                    // i일부터 10일간 검사
+                    for (int j = i; j < i + 10; j++) {
+                        String str = discount[j];
+
+                        if (dump.containsKey(str)) {
+                            dump.put(str, dump.get(str) - 1);
+
+                            if (dump.get(str) == 0) {
+                                dump.remove(str);
+                            }
+                        }
+                    }
+
+                    // 10일 검사 끝난 뒤 전부 만족했는지 확인
+                    if (dump.isEmpty()) {
+                        answer++;
+                    }
+                }
+
+                return answer;
+            }
+        }
 
     }
 }
