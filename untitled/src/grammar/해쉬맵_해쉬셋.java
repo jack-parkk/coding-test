@@ -22,6 +22,10 @@ public class 해쉬맵_해쉬셋 {
         if(hashMap.get("apple") == 0 ) {
             hashMap.remove("apple");
         }
-        // 전체 순회
+        // 모든 키값 확인
+        Set<String> set = hashMap.keySet();
+        for (String str : set) {
+            System.out.println("hashMap = " + str);
+        }
     }
 }
