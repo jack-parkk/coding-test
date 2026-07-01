@@ -17,6 +17,12 @@ public class 순열 {
          * 3P2 = 3!/1! = 6
          * */
 
+        /***
+         * 고른다
+         * 다음 자리로 간다
+         * 되돌린다
+         */
+
         int[] arr = {1, 2, 3}; // 뽑을 대상
         int r = 2;// 뽑을 갯수
         boolean[] visited = new boolean[arr.length];
